@@ -3,6 +3,7 @@ using Gear;
 using GTFO.API;
 using HarmonyLib;
 using Newtonsoft.Json.Serialization;
+using Player;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,6 +11,7 @@ using System.Text;
 using System.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using static MLS.MLSGearArrayDescriptor;
 
 namespace BetterBioTracker;
 [HarmonyPatch]
@@ -100,6 +102,10 @@ internal static class Inject_BioSpawn
     static void Post_ScannerSpawned(EnemyScanner __instance)
     {
         __instance.gameObject.AddComponent<BetterBio>();
+        foreach (var renderer in __instance.GearPartHolder.gameObject.GetComponentsInChildren<Renderer>(includeInactive: true))
+        {
+            renderer.material.renderQueue = 3000;
+        }
     }
 
     [HarmonyPatch(typeof(EnemyScannerGraphics), nameof(EnemyScannerGraphics.Start))]

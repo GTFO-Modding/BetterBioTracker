@@ -36,6 +36,8 @@ internal sealed partial class BetterBio : MonoBehaviour
 
         _ScreenStatePool = statePool.ToArray();
         statePool.Clear();
+
+        SetThermalScreen(ScreenState.Default);
     }
 
     private void Update_ThermalVision_Input()
